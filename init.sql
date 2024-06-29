@@ -1,0 +1,8 @@
+-- init.sql
+
+CREATE TABLE IF NOT EXISTS list_contacts (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  name VARCHAR(255) NOT NULL,
+  phone VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL,
+);

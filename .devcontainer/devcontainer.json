@@ -1,0 +1,52 @@
+{
+    "name": "Backend Contact API",
+    "dockerComposeFile": [
+        "../docker-compose.yml",
+        "docker-compose.yml"
+    ],
+    "service": "app",
+    "workspaceFolder": "/workspace",
+    "customizations": {
+        "vscode": { 
+            "settings": {
+                "launch": {
+                    "configurations": [
+                        {
+                            
+                            "name": "Python: Module (Production)",
+                            "type": "debugpy",
+                            "request": "launch",
+                            "module": "uvicorn",
+                            "args": ["app:app"],
+                            "justMyCode": true,
+                            "console": "integratedTerminal"
+              
+                        }
+                    ]
+                },
+                "terminal.integrated.shell.linux": "/bin/ash",
+                "python.defaultInterpreterPath": "home/userapp/app/.venv/bin/python3",
+                "python.testing.pytestArgs": [
+                    "src"
+                ],
+                "python.testing.pytestPath": "src/test",
+                "remoteUser": "userapp",  
+        },
+        "extensions": [
+            "ms-python.python",
+            "ms-python.vscode-pylance",
+            "ms-python.debugpy"
+        ]
+        }
+    },  
+    "remoteEnv": {
+        "PYTHONPATH": "/workspace/app:/usr/local/bin"
+    },
+    "remoteUser": "userapp",
+    "forwardPorts": [
+        8001,
+        3306,
+        8080
+    ]
+}
+    
