@@ -6,7 +6,10 @@ from typing import Union, List
 
 router = APIRouter()
 
-instance = ContactSevices()
+instance = ContactSevices(
+    db= Postgres()
+    )
+
 
 @router.get("/contacts", response_model=Union[Contact,List[Contact]])
 async def read_all():
