@@ -66,4 +66,4 @@ USER ${USERNAME}
 RUN mkdir -p /home/${USERNAME}/.vscode-server/extensions
 
 # Define o comando padrão para iniciar o contêiner
-CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8001"]
+CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8081"]

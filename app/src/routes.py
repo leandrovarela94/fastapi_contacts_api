@@ -1,51 +1,49 @@
 from fastapi import APIRouter
+from postgres import Postgres
 from handler import ContactSevices
-from model import Contact
+from dto import Contact
 from typing import Union, List
 
 router = APIRouter()
 
+instance = ContactSevices()
 
-@router.get("/contacts")
-async def read_all(response_model=Union[Contact,List[Contact]]):
+@router.get("/contacts", response_model=Union[Contact,List[Contact]])
+async def read_all():
 
-    result = await ContactSevices.get_contact()
+    result = await instance.get_contact()
 
-    response_final = []
-
-    for item in result:
-        response_final = {
-            "id": item[0],
-            "name": item[1],
-            "phone": item[2],
-            "email": item[3]
-        }
+    response_final = [ {
+                        "id": item[0],
+                        "name": item[1],
+                        "phone": item[2],
+                        "email": item[3]
+                    } for item in result 
+                ]
 
     return response_final
 
 
-@router.get("/contacts/{id}", response_model=Contact)
+@router.get("/contacts/{id}", response_model=None)
 async def read_one(id: int):
 
-    result = await ContactSevices.get_one_contacts(id)
+    result = await instance.get_one_contacts(id)
 
-    response_final = []
-
-    for item in result:
-        response_final = {
-            "id": item[0],
-            "name": item[1],
-            "phone": item[2],
-            "email": item[3]
-        }
-
+    response_final = [ {
+                        "id": item[0],
+                        "name": item[1],
+                        "phone": item[2],
+                        "email": item[3]
+                    } for item in result 
+                ]
+    
     return response_final
 
 
-@router.post("/contacts")
+@router.post("/contacts", response_model=None)
 async def create_contact(contact: Contact):
 
-    await ContactSevices.post_contacts(contact)
+    await instance.post_contacts(contact)
 
     return {f"Sucess Created"}
 
@@ -53,7 +51,7 @@ async def create_contact(contact: Contact):
 @router.delete("/contacts/{id}")
 async def delete_contact(id: int):
 
-    await ContactSevices.delete_contact(id)
+    await instance.delete_contact(id)
     
     return {f"Sucess : Deleted"}
 
@@ -61,7 +59,7 @@ async def delete_contact(id: int):
 @router.put("/contacts/{id}")
 async def update_contact(contact: Contact, id: int):
 
-    await ContactSevices.update_contact(
+    await instance.update_contact(
         contact, id)
 
     return {f"Sucess Updated"}

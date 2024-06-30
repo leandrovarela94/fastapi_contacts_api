@@ -1,11 +1,5 @@
-import pydantic
 import orm_config
 from sqlalchemy import text
-
-class Contact(pydantic.BaseModel):
-    name: str
-    phone: pydantic.EmailStr
-    email: str
 
 
 class Postgres:
