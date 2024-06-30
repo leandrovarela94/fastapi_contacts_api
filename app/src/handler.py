@@ -1,14 +1,6 @@
 import postgres as client
-import pydantic 
 
-
-class Contact(pydantic.BaseModel):
-    name: str
-    phone: str
-    email: str
-
-
-class ContactSevices():
+class ContactSevices:
 
     def __init__(self):
         self.connect = client.Postgres().connect()
@@ -30,7 +22,7 @@ class ContactSevices():
         return result
     
 
-    async def post_contacts(self, contact: Contact, Body=(...)):
+    async def post_contacts(self, contact: client.Contact, Body=(...)):
         try:
             await self.connect.execute_query(query=f"INSERT INTO list_contacts (name,phone,email) VALUES('{contact.name}','{contact.phone}','{contact.email}')")
             await self.connect.conn.commit()
@@ -46,7 +38,7 @@ class ContactSevices():
             raise ConnectionError(msg=f"Erro de Conexão com o Banco, detalhes ({error})")
 
 
-    async def update_contact(self, contact: Contact, id): 
+    async def update_contact(self, contact: client.Contact, id): 
         try:
             query=f"UPDATE list_contacts set name = '{contact.name}', phone = '{contact.phone}', email ='{contact.email}' WHERE id = {id} "
             await self.connect.execute_query(query=query)

@@ -1,18 +1,12 @@
-import os
-from sqlalchemy import create_engine, text
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+import pydantic
+import orm_config
+from sqlalchemy import text
 
-# Cria a classe base para os modelos
-Base = declarative_base()
+class Contact(pydantic.BaseModel):
+    name: str
+    phone: pydantic.EmailStr
+    email: str
 
-DATABASE_URL = os.getenv('APP_POSTGRES_DATABASE_URL')
-
-# Cria o motor de conexão
-engine = create_engine(DATABASE_URL)
-
-# Cria a fábrica de sessões
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 class Postgres:
     def __init__(self):
@@ -20,7 +14,7 @@ class Postgres:
 
     def connect(self):
         try:
-            self.session = SessionLocal()
+            self.session = orm_config.SessionLocal()
             print('Conexão ao POSTGRES estabelecida.')
             return self.session
         except Exception as e:

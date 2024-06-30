@@ -2,7 +2,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 import uvicorn
-from routes import router as contacts
+from routes import router 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -14,7 +14,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(lifespan=lifespan)
 
 
-app.include_router(router=contacts)
+app.include_router(router=router)
 
 app.add_middleware(
     CORSMiddleware,

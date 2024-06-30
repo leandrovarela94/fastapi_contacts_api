@@ -1,5 +1,5 @@
-from sqlalchemy import create_engine, Column, Integer, String, Sequence
-from app.src.postgres import Base
+from sqlalchemy import Column, Integer, String, Sequence
+from orm_config import Base, engine
 
 
 # Definir a classe da tabela
@@ -11,3 +11,4 @@ class Contact(Base):
     phone = Column(String(15), nullable=False)
 
 
+Base.metadata.create_all(bind=engine)
