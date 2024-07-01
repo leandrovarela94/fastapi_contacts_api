@@ -17,8 +17,7 @@
                             "type": "debugpy",
                             "request": "launch",
                             "module": "uvicorn",
-                            "args": ["app:app"],
-                            "justMyCode": true,
+                            "args": ["src/app:app"],               
                             "console": "integratedTerminal"
               
                         }

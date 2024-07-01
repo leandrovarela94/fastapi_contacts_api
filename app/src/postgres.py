@@ -18,6 +18,9 @@ class Postgres:
         try:
             if self.session:
                 result = self.session.execute(text(query))
+                if query.startswith("DELETE") or query.startswith("INSERT") or query.startswith("UPDATE"):
+                    self.session.commit()
+                    return None
                 self.session.commit()
                 return result.fetchall()
             
@@ -27,3 +30,4 @@ class Postgres:
             
         finally:
             self.session.close()
+
